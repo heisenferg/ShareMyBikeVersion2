@@ -18,8 +18,15 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
+        android:id="@+id/nav_addBike"
+        android:name="com.example.sharemybike.ui2.slideshow.SlideshowFragment"
+        android:label="Añadir bici"
+        tools:layout="@layout/add_bike_fragment" />
+
+    <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.sharemybike.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
 </navigation>

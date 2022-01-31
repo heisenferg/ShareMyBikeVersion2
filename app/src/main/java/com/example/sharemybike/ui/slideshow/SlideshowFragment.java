@@ -29,21 +29,18 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
+public class SlideshowFragment extends Fragment  {
 
     private SlideshowViewModel slideshowViewModel;
     private @NonNull FragmentMapsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+       // slideshowViewModel =
+        //        new ViewModelProvider(this).get(SlideshowViewModel.class);
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        return view;
 
-        binding = FragmentMapsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-
-        return root;
     }
 
     @Override
@@ -51,16 +48,15 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
         super.onDestroyView();
         binding = null;
     }
-    GoogleMap mMap;
-    @Override
+   /* @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap=googleMap;
+        GoogleMap mMap=googleMap;
         Log.d("MAPA", " Carga aquí");
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         PolylineOptions poly=new PolylineOptions();
         //for each bike in the list
-        for (Bike c : GalleryFragment.mValues) {
+        for (Bike c : mValues) {
 
             //gets its latitude and longitude
             LatLng ll = new LatLng(Double.valueOf(c.getLatitude()), Double.valueOf(c.getLongitude()));
@@ -75,6 +71,9 @@ public class SlideshowFragment extends Fragment implements OnMapReadyCallback {
         LatLngBounds bounds = builder.build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
         mMap.animateCamera(cu);
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
 
     }
-}
+*/}

@@ -41,7 +41,30 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            GoogleMap mMap=googleMap;
+            Log.d("MAPA", " Carga aquí");
 
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            PolylineOptions poly=new PolylineOptions();
+            //for each bike in the list
+            for (Bike c : mValues) {
+
+                //gets its latitude and longitude
+                LatLng ll = new LatLng(Double.valueOf(c.getLatitude()), Double.valueOf(c.getLongitude()));
+                //adds a marker on the map
+                mMap.addMarker(new MarkerOptions().position(ll).title(c.getCity()).snippet(String.valueOf(c.getOwner())+"%"));
+                builder.include(ll);
+                //adds also a point in the polyline
+                poly.add(ll);
+            }
+
+            mMap.addPolyline(poly);
+            LatLngBounds bounds = builder.build();
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+            mMap.animateCamera(cu);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(0, 0))
+                    .title("Marker"));
         }
     };
 
@@ -68,29 +91,8 @@ public class MapsFragment extends Fragment {
 /*
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-      /*  GoogleMap mMap=googleMap;
-        Log.d("MAPA", " Carga aquí");
+      /*
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        PolylineOptions poly=new PolylineOptions();
-        //for each bike in the list
-        for (Bike c : mValues) {
-
-            //gets its latitude and longitude
-            LatLng ll = new LatLng(Double.valueOf(c.getLatitude()), Double.valueOf(c.getLongitude()));
-            //adds a marker on the map
-            mMap.addMarker(new MarkerOptions().position(ll).title(c.getCity()).snippet(String.valueOf(c.getOwner())+"%"));
-            builder.include(ll);
-            //adds also a point in the polyline
-            poly.add(ll);
-        }
-
-        mMap.addPolyline(poly);
-        LatLngBounds bounds = builder.build();
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
-        mMap.animateCamera(cu);
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
-    }*/
+    }
+*/
 }
