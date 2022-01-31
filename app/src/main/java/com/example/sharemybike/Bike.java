@@ -26,6 +26,7 @@ public class Bike {
     private String location;
     private String country;
 
+
     public Double getLatitude() {
         return latitude;
     }
@@ -116,6 +117,15 @@ public class Bike {
         this.image=image;
         this.latitude=latitude;
         this.longitude=longitude;
+    }
+
+    public Bike(String city, String description, Double latitude, String location, Double longitude) {
+        this.description = description;
+        this.city = city;
+        this.location = location;
+        this.latitude=latitude;
+        this.longitude=longitude;
+        this.photo= photo;
     }
 
     public Bike(Bitmap photo, String owner, String description, String city,  String location, String email) {

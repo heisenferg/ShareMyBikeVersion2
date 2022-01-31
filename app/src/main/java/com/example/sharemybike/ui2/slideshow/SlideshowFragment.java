@@ -3,6 +3,8 @@ package com.example.sharemybike.ui2.slideshow;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -10,13 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.sharemybike.Bike;
 import com.example.sharemybike.R;
 import com.example.sharemybike.databinding.AddBikeFragmentBinding;
 import com.example.sharemybike.databinding.FragmentFirstBinding;
+import com.example.sharemybike.ui.gallery.GalleryFragment;
+
+import java.util.ArrayList;
 
 public class SlideshowFragment extends Fragment  {
 
@@ -33,6 +40,13 @@ AddBikeFragmentBinding binding;
             @Override
             public void onClick(View v) {
                 openGallery();
+            }
+        });
+
+        binding.buttonAddBike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+nuevaBici();
             }
         });
 
@@ -61,5 +75,20 @@ AddBikeFragmentBinding binding;
             image = data.getData();
             binding.ivPhoto.setImageURI(image);
         }
+    }
+
+    ArrayList<Bike> bici = new ArrayList<Bike>();
+
+    public void nuevaBici(){
+        String longitud = binding.etLongitud.getText().toString();
+        String latitud = binding.etLatitud.getText().toString();
+        String ciudad = binding.etCiudad.getText().toString();
+        String direccion = binding.etDireccion.getText().toString();
+        String descripcion = binding.etDescripcion.getText().toString();
+        longitud = String.valueOf(Double.parseDouble(longitud));
+        latitud = String.valueOf(Double.parseDouble(latitud));
+
+        Bike bici = new Bike(ciudad, descripcion, Double.parseDouble(latitud), direccion,Double.parseDouble(longitud));
+        GalleryFragment.mValues.add(bici);
     }
 }
