@@ -46,7 +46,7 @@ AddBikeFragmentBinding binding;
         binding.buttonAddBike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-nuevaBici();
+                nuevaBici();
             }
         });
 
