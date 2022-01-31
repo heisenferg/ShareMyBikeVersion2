@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharemybike.BikesContent;
+import com.example.sharemybike.Mapaa;
 import com.example.sharemybike.MapsFragment;
 import com.example.sharemybike.MyItemRecyclerViewAdapter;
 import com.example.sharemybike.R;
@@ -70,8 +71,8 @@ public class HomeFragment extends Fragment {
         binding.buttonMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent intent = new Intent(getContext(), Mapaa.class);
+                startActivity(intent);
             }
         });
         return binding.getRoot();
