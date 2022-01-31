@@ -31,7 +31,7 @@ public class SlideshowFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        return binding.getRoot();
+        return root;
     }
 
     @Override
