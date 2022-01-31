@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="direccion">Rambla del Poblenou, 156</string>
+    <string name="titulo">The bike experience exchange app</string>
+    <string name="email">share@mybike.com</string>
+    <string name="inicio">Login</string>
+    <string name="textoFecha">Select the date to list the available bikes</string>
+</resources>
