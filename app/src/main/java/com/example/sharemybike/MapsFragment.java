@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsFragment extends Fragment {
+    GoogleMap mMap;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-GoogleMap mMap;
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -39,11 +40,12 @@ GoogleMap mMap;
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap=googleMap;
+            Log.d("MAPA", " Carga aquí");
 
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             PolylineOptions poly=new PolylineOptions();
             //for each bike in the list
-            for (Bike c : mValues) {
+        /*    for (Bike c : mValues) {
 
                 //gets its latitude and longitude
                 LatLng ll = new LatLng(Double.valueOf(c.getLatitude()), Double.valueOf(c.getLongitude()));
@@ -52,7 +54,17 @@ GoogleMap mMap;
                 builder.include(ll);
                 //adds also a point in the polyline
                 poly.add(ll);
-            }
+            }*/
+            LatLng ll = new LatLng(Double.valueOf(mValues.get(1).getLatitude()), Double.valueOf(mValues.get(1).getLongitude()));
+            //adds a marker on the map
+            mMap.addMarker(new MarkerOptions().position(ll).title(mValues.get(1).getCity()).snippet(String.valueOf(mValues.get(1).getOwner())+"%"));
+            builder.include(ll);
+            //adds also a point in the polyline
+            poly.add(ll);
+
+
+
+
             mMap.addPolyline(poly);
             LatLngBounds bounds = builder.build();
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
