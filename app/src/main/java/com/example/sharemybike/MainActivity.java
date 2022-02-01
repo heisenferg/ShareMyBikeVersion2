@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -101,7 +102,7 @@ ActivityMainBinding binding;
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        //permisos();
+        permisos();
 
         mFusedLocationClient= LocationServices.
                 getFusedLocationProviderClient(getApplicationContext());
@@ -115,6 +116,18 @@ ActivityMainBinding binding;
             localizar();
         }
     }
+
+    private void permisos(){
+
+        //   while (permisos_concedidos==false) {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+    }
+
+
 
     // [START on_start_check_user]
     @Override
@@ -220,23 +233,6 @@ ActivityMainBinding binding;
         }
     };
 
-
-    public void localizar() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-        mFusedLocationClient.requestLocationUpdates(locationRequest,
-                mLocationCallback, Looper.getMainLooper());
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, locationOnSuccessListener);
-
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -246,6 +242,19 @@ ActivityMainBinding binding;
             localizar();
         }
     }
+    @SuppressLint("MissingPermission")
+    public void localizar() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mFusedLocationClient.requestLocationUpdates(locationRequest,
+                mLocationCallback, Looper.getMainLooper());
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, locationOnSuccessListener);
+    }
+
+
     AddBikeFragmentBinding bindi;
 
     OnSuccessListener<Location> locationOnSuccessListener = new OnSuccessListener<Location>() {
