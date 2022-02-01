@@ -37,22 +37,8 @@ public class FirstFragment extends Fragment {
 
 
     }
-    int mes;
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-/*
-        binding.calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-                public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                    // El mes me aparece como uno menos, así que le sumé 1 para que saliera correcto.
-                    mes = month + 1;
-                    binding.textViewFecha.setText(dayOfMonth + "/" + mes + "/" + year);
-                    selectedDate = dayOfMonth + "/" + mes + "/" + year;
-                }
-
-        });*/
-
 
 
     }

@@ -4,21 +4,35 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sharemybike.databinding.ActivityMainBinding;
+import com.example.sharemybike.databinding.AddBikeFragmentBinding;
+import com.example.sharemybike.ui2.slideshow.SlideshowFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -26,12 +40,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 ActivityMainBinding binding;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    SlideshowFragment slide = new SlideshowFragment();
+    Location ultimaUbicacion;
+    FusedLocationProviderClient mFusedLocationClient;
+    int FINE_LOCATION_REQUEST_CODE = 101;
+    public static Double longitud, latitud;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +100,20 @@ ActivityMainBinding binding;
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        //permisos();
+
+        mFusedLocationClient= LocationServices.
+                getFusedLocationProviderClient(getApplicationContext());
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION },
+                    FINE_LOCATION_REQUEST_CODE);
+        }
+        else
+        {
+            localizar();
+        }
     }
 
     // [START on_start_check_user]
@@ -164,6 +201,65 @@ ActivityMainBinding binding;
         Intent i = new Intent(this, MainPanelActivity.class);
         startActivity(i);
     }
+
+
+    LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            List<Location> locationList = locationResult.getLocations();
+            if (locationList.size() > 0) {
+                Location location = locationList.get(locationList.size() - 1);
+                ultimaUbicacion = location;
+                latitud=location.getLatitude();
+                longitud=location.getLongitude();
+                //slide.updateIU();
+                if (mFusedLocationClient != null) {
+                    mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+                }
+            }
+        }
+    };
+
+
+    public void localizar() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        mFusedLocationClient.requestLocationUpdates(locationRequest,
+                mLocationCallback, Looper.getMainLooper());
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, locationOnSuccessListener);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==FINE_LOCATION_REQUEST_CODE &&
+                grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            localizar();
+        }
+    }
+    AddBikeFragmentBinding bindi;
+
+    OnSuccessListener<Location> locationOnSuccessListener = new OnSuccessListener<Location>() {
+        @Override
+        public void onSuccess(Location location) {
+            if(location!=null) {
+                latitud=location.getLatitude();
+                Log.d("BARRERA", "localiza " + latitud);
+                longitud=location.getLongitude();
+            }
+        }
+    };
+
+
 
 
 }

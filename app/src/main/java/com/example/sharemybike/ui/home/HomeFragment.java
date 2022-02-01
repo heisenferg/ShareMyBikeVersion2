@@ -1,5 +1,6 @@
 package com.example.sharemybike.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sharemybike.BikesContent;
+import com.example.sharemybike.MyItemRecyclerViewAdapter;
 import com.example.sharemybike.R;
 import com.example.sharemybike.databinding.FragmentFirstBinding;
+import com.example.sharemybike.ui.gallery.GalleryFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -64,4 +70,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

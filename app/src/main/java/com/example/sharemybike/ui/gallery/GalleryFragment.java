@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -96,9 +97,7 @@ com.example.sharemybike.MyItemRecyclerViewAdapter adapter;
                     }
                     for (int i=0; i<mValues.size();i++) {
                         String m = mValues.get(i).getDescription();
-                        Log.d("ERROR:", "lee aquí" + m);
                     }
-                   // adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -146,28 +145,6 @@ com.example.sharemybike.MyItemRecyclerViewAdapter adapter;
     HomeFragment home= new HomeFragment();
     FirebaseUser usuario;
 
-
-    public void reservar(){
-
-        DatabaseReference mDatabase= FirebaseDatabase.getInstance("https://sharemybike-aa026-default-rtdb.europe-west1.firebasedatabase.app").getReference();
-        DatabaseReference hopperRef = mDatabase.child("reserve_list");
-        Map<String, Object> hopperUpdates = new HashMap<>();
-        hopperUpdates.put("fecha_reserva", "Reservada el "+ home.selectedDate);
-        usuario = FirebaseAuth.getInstance().getCurrentUser();
-
-        hopperUpdates.put("Usuario", usuario.getDisplayName());
-
-
-        hopperRef.updateChildren(hopperUpdates);
-
-
-
-        //    Map<String, Object> updates = new HashMap<>();
-        // updates.put("bikes_list/0/numero_reservas/", ServerValue.increment(1));
-        //  updates.put("bikes_list/0/fecha_reserva/", fecha);
-        //  mDatabase.updateChildren(updates);
-        //mDatabase.setValue(fecha);
-    }
 
 
         @Override

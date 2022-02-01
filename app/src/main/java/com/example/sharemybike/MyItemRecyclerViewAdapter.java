@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sharemybike.PlaceholderContent.PlaceholderItem;
 import com.example.sharemybike.databinding.FragmentItemBinding;
@@ -31,7 +32,6 @@ import java.util.Map;
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>  {
 
 GalleryFragment gal = new GalleryFragment();
-GalleryFragment gal2= new GalleryFragment();
 
 
     public MyItemRecyclerViewAdapter(List<Bike> items) {
@@ -58,32 +58,9 @@ GalleryFragment gal2= new GalleryFragment();
             @SuppressLint("IntentReset")
             @Override
             public void onClick (View v) {
-               /* Intent intent = new Intent();
-                Intent chooser = null;
-                Context context = null;
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/xml");
-                intent.setData(Uri.parse("mailto:"));
-
-                String[] para = {gal.mValues.get(position).getEmail()};
-                intent.putExtra(Intent.EXTRA_EMAIL, para);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Can I use your bike?");
-                String owner = String.valueOf(gal.mValues.get(position).getOwner());
-                String ubicacion = String.valueOf(gal.mValues.get(position).getLocation());
-                String ciudad = String.valueOf(gal.mValues.get(position).getCity());
-                String fecha = BikesContent.selectedDate;
-                intent.putExtra(Intent.EXTRA_TEXT, "Dear Mr/Mrs " + owner +":\n" +
-                        "I´d like to use your bike at " + ubicacion + " (" + ciudad +") for " +
-                        "the following date: " + fecha + "\n\n" +
-                        "Can you confirm its availability?\n" +
-                        "Kindest regards");
-                intent.setType("message/rfc822");
-                chooser =intent.createChooser(intent, "Enviar por email");
-                v.getContext().startActivity(intent);*/
 
                 // Guardar en
                 reservaBici(position);
-
             }
         });
     }
@@ -100,12 +77,9 @@ GalleryFragment gal2= new GalleryFragment();
         usuarios = new UserBooking(usuario.getProviderId(), usuario.getEmail(), gal.mValues.get(position).getEmail(), gal.mValues.get(position).getCity(), home.selectedDate);
 
         Map<String, UserBooking> user = new HashMap<>();
-      //  String key =mDatabase.child("Book user ").push().getKey();
         user.put(gal.mValues.get(position).getOwner(), usuarios);
 
         hopperRef.child(gal.mValues.get(position).getOwner()).setValue(user);
-        //mDatabase.child("Book user " + key).setValue(user);
-      //  hopperRef.setValue(user);
 
     }
 

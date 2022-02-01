@@ -119,11 +119,12 @@ public class Bike {
         this.longitude=longitude;
     }
 
-    public Bike(String city, String description, Double latitude, String location, Double longitude) {
-        this.description = description;
+    public Bike(String city, String owner, String description, Double latitude, String location, Double longitude, Bitmap photo) {
         this.city = city;
-        this.location = location;
+        this.owner = owner;
+        this.description = description;
         this.latitude=latitude;
+        this.location = location;
         this.longitude=longitude;
         this.photo= photo;
     }

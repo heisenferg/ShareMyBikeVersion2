@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/calendar"
             android:title="Seleccion de fecha" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/list"
             android:title="Listado bicis" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/fragment_maps"
             android:icon="@drawable/ic_baseline_location_on_24"
-            android:title="@string/menu_slideshow" />
+            android:title="Ver mapa" />
         <item
             android:id="@+id/nav_addBike"
-            android:icon="@drawable/ic_baseline_location_on_24"
+            android:icon="@drawable/add"
             android:title="Añadir bicis" />
     </group>
 </menu>

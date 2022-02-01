@@ -30,29 +30,20 @@ public class MapsFragment extends Fragment {
    // GoogleMap mMap;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            GoogleMap mMap=googleMap;
+            GoogleMap mMap = googleMap;
             Log.d("MAPA", " Carga aquí");
 
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            PolylineOptions poly=new PolylineOptions();
+            PolylineOptions poly = new PolylineOptions();
             //for each bike in the list
             for (Bike c : mValues) {
 
                 //gets its latitude and longitude
                 LatLng ll = new LatLng(Double.valueOf(c.getLatitude()), Double.valueOf(c.getLongitude()));
                 //adds a marker on the map
-                mMap.addMarker(new MarkerOptions().position(ll).title(c.getCity()).snippet(String.valueOf(c.getOwner())+"%"));
+                mMap.addMarker(new MarkerOptions().position(ll).title(c.getCity()).snippet(String.valueOf(c.getOwner()) + "%"));
                 builder.include(ll);
                 //adds also a point in the polyline
                 poly.add(ll);
@@ -62,9 +53,7 @@ public class MapsFragment extends Fragment {
             LatLngBounds bounds = builder.build();
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
             mMap.animateCamera(cu);
-            googleMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(0, 0))
-                    .title("Marker"));
+
         }
     };
 
@@ -85,14 +74,8 @@ public class MapsFragment extends Fragment {
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
+           // mapFragment.getMapAsync(callback);
         }
     }
-/*
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-      /*
 
-    }
-*/
 }

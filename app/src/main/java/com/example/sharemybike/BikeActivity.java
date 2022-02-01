@@ -1,6 +1,7 @@
 package com.example.sharemybike;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +17,6 @@ public class BikeActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityBikeBinding binding;
     private BikesContent bikesContent;
-
 
 
     @Override
